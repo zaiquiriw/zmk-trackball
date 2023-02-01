@@ -39,24 +39,24 @@ static struct output_status_state get_state(const zmk_event_t *_eh) {
 }
 
 static void set_status_symbol(lv_obj_t *label, struct output_status_state state) {
-    char text[9] = {};
+    char text[10] = {};
 
     switch (state.selected_endpoint) {
     case ZMK_ENDPOINT_USB:
-        strcat(text, LV_SYMBOL_USB "   ");
+        strcat(text, LV_SYMBOL_USB);
         break;
     case ZMK_ENDPOINT_BLE:
         if (state.active_profile_bonded) {
             if (state.active_profile_connected) {
-                snprintf(text, sizeof(text), LV_SYMBOL_WIFI "%i " LV_SYMBOL_OK,
-                         state.active_profile_index);
+                snprintf(text, sizeof(text), LV_SYMBOL_WIFI " %i " LV_SYMBOL_OK,
+                         state.active_profile_index + 1);
             } else {
-                snprintf(text, sizeof(text), LV_SYMBOL_WIFI "%i " LV_SYMBOL_CLOSE,
-                         state.active_profile_index);
+                snprintf(text, sizeof(text), LV_SYMBOL_WIFI " %i " LV_SYMBOL_CLOSE,
+                         state.active_profile_index + 1);
             }
         } else {
-            snprintf(text, sizeof(text), LV_SYMBOL_WIFI "%i " LV_SYMBOL_SETTINGS,
-                     state.active_profile_index);
+            snprintf(text, sizeof(text), LV_SYMBOL_WIFI " %i " LV_SYMBOL_SETTINGS,
+                     state.active_profile_index + 1);
         }
         break;
     }
@@ -73,7 +73,7 @@ ZMK_DISPLAY_WIDGET_LISTENER(widget_output_status, struct output_status_state,
                             output_status_update_cb, get_state)
 ZMK_SUBSCRIPTION(widget_output_status, zmk_endpoint_selection_changed);
 
-#if defined(CONFIG_USB)
+#if IS_ENABLED(CONFIG_USB_DEVICE_STACK)
 ZMK_SUBSCRIPTION(widget_output_status, zmk_usb_conn_state_changed);
 #endif
 #if defined(CONFIG_ZMK_BLE)

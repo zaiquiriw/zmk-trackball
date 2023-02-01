@@ -1,4 +1,5 @@
 #include <behaviors/key_press.dtsi>
+#include <behaviors/key_toggle.dtsi>
 #include <behaviors/transparent.dtsi>
 #include <behaviors/none.dtsi>
 #include <behaviors/mod_tap.dtsi>
@@ -18,3 +19,7 @@
 #include <behaviors/mouse_move.dtsi>
 #include <behaviors/mouse_scroll.dtsi>
 #include <behaviors/trackball_pim447.dtsi>
+#include <behaviors/caps_word.dtsi>
+#include <behaviors/key_repeat.dtsi>
+#include <behaviors/backlight.dtsi>
+#include <behaviors/macros.dtsi>

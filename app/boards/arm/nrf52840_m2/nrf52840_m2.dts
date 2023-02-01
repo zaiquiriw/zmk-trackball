@@ -15,6 +15,8 @@
 		zephyr,code-partition = &code_partition;
 		zephyr,sram = &sram0;
 		zephyr,flash = &flash0;
+		zephyr,console = &cdc_acm_uart;
+		zmk,battery = &vbatt;
 	};
 
 	leds {
@@ -31,6 +33,14 @@
 			gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;
 			label = "Blue LED";
 		};
+	};
+
+	vbatt: vbatt {
+		compatible = "zmk,battery-voltage-divider";
+		label = "BATTERY";
+		io-channels = <&adc 0>;
+		output-ohms = <1000000>;
+		full-ohms = <(1000000 + 1000000)>;
 	};
 
 };
@@ -54,6 +64,10 @@
 &usbd {
 	compatible = "nordic,nrf-usbd";
 	status = "okay";
+	cdc_acm_uart: cdc_acm_uart {
+		compatible = "zephyr,cdc-acm-uart";
+		label = "CDC_ACM_0";
+	};
 };
 
 
